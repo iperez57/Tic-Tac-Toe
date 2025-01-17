@@ -31,6 +31,7 @@ namespace TicTacToeTest
     [TestClass]
     public class GameboardTest
     {
+        #region Tests for gameboard initialization
         [TestMethod]
         public void GameboardInitialized3by3Grid()
         {
@@ -63,6 +64,9 @@ namespace TicTacToeTest
                 }
             }
         }
+        #endregion
+
+        #region tests for scores
 
         [TestMethod]
         public void MakeSurePlayersScoreStartAt0()
@@ -78,7 +82,7 @@ namespace TicTacToeTest
         }
 
         [TestMethod]
-        public void MakeSurePlayersScoreIncreaseBy1WhenEitherDrawWinLose()
+        public void MakeSurePlayersScoreIncreaseBy1WhenEitherDrawWin()
         {
             //arrnage
             var game = new Gameboard();
@@ -92,7 +96,8 @@ namespace TicTacToeTest
             Assert.AreEqual(1, game.ScoreO);
             Assert.AreEqual(1, game.Draw);
             Assert.AreEqual(0, game.Turn);
-        }
+        } 
+        #endregion
     }
 
 }

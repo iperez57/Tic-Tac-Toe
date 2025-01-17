@@ -43,7 +43,7 @@
         }
         #endregion
 
-        #region keeps track of score of the game
+        #region keeps track of increasing score of the game
         public int PlayerXWins()
         {
             return ++ScoreX;
@@ -63,12 +63,12 @@
         #region checks for win conditions
         public bool WinConditionsForO()
         {
-            return true;
+            return CheckWinCondition('O');
         }
 
         public bool WinConditionsForX()
         {
-            return false;
+            return CheckWinCondition('X');
         }
 
         public bool CheckWinCondition(char player)

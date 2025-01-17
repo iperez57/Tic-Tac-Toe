@@ -13,9 +13,20 @@
     // 
     public class Gameboard
     {
+        public int ScoreX = 0;
+        public int ScoreO = 0;
+        public int Draw = 0;
+        public int Turn = 0;
+
+        #region starts the board for the game
         public Gameboard()
         {
             BoardInitializer();
+            int playerXScore = ScoreX;
+            int playerOScore = ScoreO;
+            int stalemate = Draw;
+            int turn = Turn;
+
         }
 
         public char[,] BoardInitializer()
@@ -30,5 +41,40 @@
             }
             return board;
         }
+        #endregion
+
+        #region keeps track of score of the game
+        public int PlayerXWins()
+        {
+            return ++ScoreX;
+        }
+
+        public int PlayerOWins()
+        {
+            return ++ScoreO;
+        }
+
+        public int Stalemate()
+        {
+            return ++Draw;
+        }
+        #endregion
+
+        #region checks for win conditions
+        public bool WinConditionsForO()
+        {
+            return true;
+        }
+
+        public bool WinConditionsForX()
+        {
+            return false;
+        }
+
+        public bool CheckWinCondition(char player)
+        {
+            return false;
+        } 
+        #endregion
     }
 }

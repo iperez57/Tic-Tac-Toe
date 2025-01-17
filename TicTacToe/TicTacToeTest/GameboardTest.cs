@@ -14,9 +14,9 @@ namespace TicTacToeTest
     // check vertical wins
     // check horizontal wins
     // check diagonal wins
-    // increase p1 score by 1
-    // increase p2 score by 1
-    // increase draw by 1
+    // increase p1 score by 1 *
+    // increase p2 score by 1 *
+    // increase draw by 1 *
     // 5 games total best of 5
     // Ensure that players cannot overwrite a cell that has already been filled. 
     // Ensure the game correctly detects a draw when the grid is full, and no player has won
@@ -64,5 +64,35 @@ namespace TicTacToeTest
             }
         }
 
+        [TestMethod]
+        public void MakeSurePlayersScoreStartAt0()
+        {
+            //arrnage
+            var game = new Gameboard();
+
+            //Assert
+            Assert.AreEqual(0, game.ScoreX);
+            Assert.AreEqual(0, game.ScoreO);
+            Assert.AreEqual(0, game.Draw);
+            Assert.AreEqual(0, game.Turn);
+        }
+
+        [TestMethod]
+        public void MakeSurePlayersScoreIncreaseBy1WhenEitherDrawWinLose()
+        {
+            //arrnage
+            var game = new Gameboard();
+            //act
+            game.PlayerOWins();
+            game.PlayerXWins();
+            game.Stalemate();
+
+            //Assert
+            Assert.AreEqual(1, game.ScoreX);
+            Assert.AreEqual(1, game.ScoreO);
+            Assert.AreEqual(1, game.Draw);
+            Assert.AreEqual(0, game.Turn);
+        }
     }
+
 }

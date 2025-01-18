@@ -35,36 +35,262 @@ namespace TicTacToeTest
         [TestMethod]
         public void GameboardInitialized3by3Grid()
         {
-            //arrnage
             var game = new Gameboard();
-            //act
-            var board = game.BoardInitializer();
-            //assert
-            Assert.AreEqual(3, board.GetLength(0));
-            Assert.AreEqual(3, board.GetLength(1));
+
+            Assert.AreEqual(3, game.Board.GetLength(0));
+            Assert.AreEqual(3, game.Board.GetLength(1));
 
         }
 
         [TestMethod]
         public void GameboardInitializedGridPopulatedWithSpace()
         {
-            //arrnage
             var game = new Gameboard();
-            //act
-            var board = game.BoardInitializer();
-            //assert
-            Assert.AreEqual(3, board.GetLength(0));
-            Assert.AreEqual(3, board.GetLength(1));
 
             for (var row = 0; row < 3; row++)
             {
                 for (int col = 0; col < 3; col++)
                 {
-                    Assert.AreEqual(' ', board[row, col]);
+                    Assert.AreEqual(' ', game.Board[row, col]);
                 }
             }
         }
         #endregion
+
+        #region Rows
+        [TestMethod]
+        public void GameboardIdentifiesRowWinForO()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'O'; game.Board[0, 1] = 'O'; game.Board[0, 2] = 'O';
+            //assert
+            Assert.IsTrue(game.CheckWinCondition('O'));
+            Assert.AreEqual(1, game.ScoreO);
+
+            //arrange
+            var game2 = new Gameboard();
+            //act
+            game2.Board[1, 0] = 'O'; game2.Board[1, 1] = 'O'; game2.Board[1, 2] = 'O';
+            //assert
+            Assert.IsTrue(game2.CheckWinCondition('O'));
+            Assert.AreEqual(1, game2.ScoreO);
+
+            //arrange
+            var game3 = new Gameboard();
+            //act
+            game3.Board[2, 0] = 'O'; game3.Board[2, 1] = 'O'; game3.Board[2, 2] = 'O';
+            //assert
+            Assert.IsTrue(game3.CheckWinCondition('O'));
+            Assert.AreEqual(1, game3.ScoreO);
+
+        }
+        [TestMethod]
+        public void GameboardIdentifiesRowWinForX()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'X'; game.Board[0, 1] = 'X'; game.Board[0, 2] = 'X';
+            //assert
+            Assert.IsTrue(game.CheckWinCondition('X'));
+            Assert.AreEqual(1, game.ScoreX);
+
+            //arrange
+            var game2 = new Gameboard();
+            //act
+            game2.Board[1, 0] = 'X'; game2.Board[1, 1] = 'X'; game2.Board[1, 2] = 'X';
+            //assert
+            Assert.IsTrue(game2.CheckWinCondition('X'));
+            Assert.AreEqual(1, game2.ScoreX);
+
+            //arrange
+            var game3 = new Gameboard();
+            //act
+            game3.Board[2, 0] = 'X'; game3.Board[2, 1] = 'X'; game3.Board[2, 2] = 'X';
+            //assert
+            Assert.IsTrue(game3.CheckWinCondition('X'));
+            Assert.AreEqual(1, game3.ScoreX);
+
+        }
+        #endregion
+        #region Columns
+        [TestMethod]
+        public void GameboardIdentifiesColumnWinForX()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'X'; game.Board[1, 0] = 'X'; game.Board[2, 0] = 'X';
+            //assert
+            Assert.IsTrue(game.CheckWinCondition('X'));
+            Assert.AreEqual(1, game.ScoreX);
+
+            //arrange
+            var game2 = new Gameboard();
+            //act
+            game2.Board[0, 1] = 'X'; game2.Board[1, 1] = 'X'; game2.Board[2, 1] = 'X';
+            //assert
+            Assert.IsTrue(game2.CheckWinCondition('X'));
+            Assert.AreEqual(1, game2.ScoreX);
+
+            //arrange
+            var game3 = new Gameboard();
+            //act
+            game3.Board[0, 2] = 'X'; game3.Board[1, 2] = 'X'; game3.Board[2, 2] = 'X';
+            //assert
+            Assert.IsTrue(game3.CheckWinCondition('X'));
+            Assert.AreEqual(1, game3.ScoreX);
+
+
+        }
+        [TestMethod]
+        public void GameboardIdentifiesColumnWinsForO()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'O'; game.Board[1, 0] = 'O'; game.Board[2, 0] = 'O';
+            //assert
+            Assert.IsTrue(game.CheckWinCondition('O'));
+            Assert.AreEqual(1, game.ScoreO);
+
+            //arrange
+            var game2 = new Gameboard();
+            //act
+            game2.Board[0, 1] = 'O'; game2.Board[1, 1] = 'O'; game2.Board[2, 1] = 'O';
+            //assert
+            Assert.IsTrue(game2.CheckWinCondition('O'));
+            Assert.AreEqual(1, game2.ScoreO);
+
+            //arrange
+            var game3 = new Gameboard();
+            //act
+            game3.Board[0, 2] = 'O'; game3.Board[1, 2] = 'O'; game3.Board[2, 2] = 'O';
+            //assert
+            Assert.IsTrue(game3.CheckWinCondition('O'));
+            Assert.AreEqual(1, game3.ScoreO);
+
+
+        }
+        #endregion
+        #region Diagonals
+        [TestMethod]
+        public void GameboardIdentifiesDiagonalOWin()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'O'; game.Board[1, 1] = 'O'; game.Board[2, 2] = 'O';
+
+            Assert.IsTrue(game.CheckWinCondition('O'));
+            Assert.AreEqual(1, game.ScoreO);
+
+            var game2 = new Gameboard();
+            game2.Board[0, 2] = 'O'; game2.Board[1, 1] = 'O'; game2.Board[2, 0] = 'O';
+            //assert
+            Assert.IsTrue(game2.CheckWinCondition('O'));
+            Assert.AreEqual(1, game2.ScoreO);
+        }
+        [TestMethod]
+        public void GameboardIdentifiesDiagonalXWin()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'X'; game.Board[1, 1] = 'X'; game.Board[2, 2] = 'X';
+
+            Assert.IsTrue(game.CheckWinCondition('X'));
+            Assert.AreEqual(1, game.ScoreX);
+
+            var game2 = new Gameboard();
+            game2.Board[0, 2] = 'X'; game2.Board[1, 1] = 'X'; game2.Board[2, 0] = 'X';
+            //assert
+            Assert.IsTrue(game2.CheckWinCondition('X'));
+            Assert.AreEqual(1, game2.ScoreX);
+
+        }
+        #endregion
+        [TestMethod]
+        public void GameboardIdentifiesDraws()
+        {
+            //arrnage
+            var game = new Gameboard();
+            //act
+            game.Board[0,0] = 'X'; game.Board[0, 1] = 'O'; game.Board[0, 2] = 'X';
+            game.Board[1,0] = 'O'; game.Board[1, 1] = 'O'; game.Board[1, 2] = 'X';
+            game.Board[2, 0] = 'X'; game.Board[2, 1] = 'X'; game.Board[2, 2] = 'O';
+            //assert
+            Assert.IsTrue(game.CheckDrawCondition());
+            Assert.AreEqual(1, game.Draw);
+
+        }
+        [TestMethod]
+        public void GameboardIdentifiesNotWins()
+        {
+            //arrange
+            var game = new Gameboard();
+            //act
+            game.Board[0, 0] = 'X'; game.Board[1, 0] = 'O'; game.Board[2, 0] = 'O';
+            //assert
+            Assert.IsFalse(game.CheckWinCondition('O'));
+            Assert.AreEqual(0, game.ScoreO);
+
+            //arrange
+            var game2 = new Gameboard();
+            //act
+            game2.Board[0, 1] = 'O'; game2.Board[1, 1] = 'X'; game2.Board[2, 1] = 'O';
+            //assert
+            Assert.IsFalse(game.CheckWinCondition('O'));
+            Assert.AreEqual(0, game.ScoreO);
+
+            //arrange
+            var game3 = new Gameboard();
+            //act
+            game3.Board[0, 2] = 'O'; game3.Board[1, 2] = 'O'; game3.Board[2, 2] = 'X';
+            //assert
+            Assert.IsFalse(game.CheckWinCondition('O'));
+            Assert.AreEqual(0, game.ScoreO);
+
+            //arrange
+            var game4 = new Gameboard();
+            //act
+            game4.Board[0, 0] = 'O'; game4.Board[0, 1] = 'X'; game4.Board[0, 2] = 'X';
+            //assert
+            Assert.IsFalse(game4.CheckWinCondition('X'));
+            Assert.AreEqual(0, game4.ScoreX);
+
+            //arrange
+            var game5 = new Gameboard();
+            //act
+            game5.Board[1, 0] = 'X'; game5.Board[1, 1] = 'O'; game5.Board[1, 2] = 'X';
+            //assert
+            Assert.IsFalse(game5.CheckWinCondition('X'));
+            Assert.AreEqual(0, game5.ScoreX);
+
+            //arrange
+            var game6 = new Gameboard();
+            //act
+            game6.Board[2, 0] = 'X'; game6.Board[2, 1] = 'X'; game6.Board[2, 2] = 'O';
+            //assert
+            Assert.IsFalse(game6.CheckWinCondition('X'));
+            Assert.AreEqual(0, game6.ScoreX);
+            //arrange
+            var game7 = new Gameboard();
+            //act
+            game7.Board[0, 0] = 'X'; game7.Board[1, 1] = 'O'; game7.Board[2, 2] = 'O';
+
+            Assert.IsFalse(game7.CheckWinCondition('O'));
+            Assert.AreEqual(0, game7.ScoreO);
+
+            var game8 = new Gameboard();
+            game8.Board[0, 2] = 'O'; game8.Board[1, 1] = 'O'; game8.Board[2, 0] = 'X';
+            //assert
+            Assert.IsFalse(game8.CheckWinCondition('O'));
+            Assert.AreEqual(0, game8.ScoreO);
+
+        }
 
         #region tests for scores
 

@@ -18,5 +18,7 @@ namespace TicTacToe
         {
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         }
+
+
     }
 }

@@ -8,10 +8,29 @@ namespace TicTacToe
 {
     public class PlayerClass
     {
+
+
         public char currentPlayer;
-        public  PlayerClass()
+        public  PlayerClass(int turn)
         {
-            currentPlayer = 'X';
+            if (turn == 0)
+            {
+                currentPlayer = 'X';
+            }
+            else
+            {
+                currentPlayer = 'O';
+            }
+            
+        }
+
+        public void MakeMove(char[,] board, int row, int col)
+        {
+            while (board[row, col] == ' ')
+            {
+                board[row, col] = currentPlayer;
+            }
+            SwapPlayer();
         }
 
         public void SwapPlayer()

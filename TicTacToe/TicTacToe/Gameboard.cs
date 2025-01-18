@@ -18,6 +18,8 @@
         public int Draw = 0;
         public int Turn = 0;
         public char[,] Board = new char[3, 3];
+        public bool winner = true;
+        public int GameCounter = 0;
 
         #region starts the board for the game
         public Gameboard()
@@ -26,6 +28,7 @@
             int playerOScore = ScoreO;
             int stalemate = Draw;
             int turn = Turn;
+            var player = new PlayerClass(turn);
             BoardInitializer();
         }
 
@@ -41,19 +44,116 @@
         }
         #endregion
 
+        //public void GameEndConditions()
+        //{
+        //    while ((ScoreX != 3 && ScoreO != 3) && (GameCounter != 5))
+        //    {
+        //        if (ScoreX > ScoreO)
+        //        {
+        //            Console.WriteLine("Player X wins the best of 5!");
+        //            ResetGame();
+        //            bool winner = true;
+        //        }
+        //        else if (ScoreO > ScoreX)
+        //        {
+        //            Console.WriteLine("Player O wins the best of 5!");
+        //            ResetGame();
+        //            bool winner = false;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("It's a Tie!");
+        //            bool winner = true;
+        //        }
+        //    }
+        //}
+        public void GameConditions()
+        {
+            switch (GameCounter)
+            {
+                case 3:
+
+                    if (ScoreX == 3)
+                    {
+                        Console.WriteLine("X Wins");
+                    }
+                    else if (ScoreO == 3)
+                    {
+                        Console.WriteLine("O Wins");
+                    }
+                    break;
+                case 4:
+
+                    if (ScoreX == 3)
+                    {
+                        Console.WriteLine("X Wins");
+                    }
+                    else if (ScoreO == 3)
+                    {
+                        Console.WriteLine("O Wins");
+                    }
+                    break;
+                case 5:
+                    if (ScoreX > ScoreO)
+                    {
+                        Console.WriteLine("X Wins");
+                    }
+                    else if (ScoreO > ScoreX)
+                    {
+                        Console.WriteLine("O Wins");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Draw");
+                    }
+
+                    break;
+            }
+        }
+
+        public void ResetRound()
+        {
+            for (var row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 3; col++)
+                {
+                    this.Board[row, col] = ' ';
+                }
+            }
+        }
+        public void ResetGame()
+        {
+            ScoreX = 0;
+            ScoreO = 0;
+            Draw = 0;
+            if (winner == true)
+            {
+                Turn = 0;
+            }
+            else
+            {
+                Turn = 1;
+            }
+
+        }
+
+
         #region keeps track of increasing score of the game
         public int PlayerXWins()
         {
+            ResetRound();
             return ++ScoreX;
         }
 
         public int PlayerOWins()
         {
+            ResetRound();
             return ++ScoreO;
         }
 
         public int Stalemate()
         {
+            ResetRound();
             return ++Draw;
         }
         #endregion

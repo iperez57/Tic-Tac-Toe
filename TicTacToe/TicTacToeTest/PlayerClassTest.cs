@@ -9,9 +9,10 @@ namespace TicTacToeTest
         [TestMethod]
         public void GameStartsWithPlayerX()
         {
-            // Arrange
-            var player = new PlayerClass(); // PlayerClass initializes currentPlayer as 'X'
-
+            // arrange
+            //new init gameboard
+            var game = new Gameboard();
+            var player = new PlayerClass(game.Turn);
             // Act
             var startingPlayer = player.currentPlayer;
 
@@ -22,9 +23,9 @@ namespace TicTacToeTest
         [TestMethod]
         public void PlayerSwapsXtoO()
         {
-            var player = new PlayerClass();
             //new init gameboard
             var game = new Gameboard();
+            var player = new PlayerClass(game.Turn);
 
             //player places something
             Assert.AreEqual('X', player.currentPlayer);
@@ -41,9 +42,9 @@ namespace TicTacToeTest
         [TestMethod]
         public void PlayerMakesMoveOnEmptySpace()
         {
-            var player = new PlayerClass();
             //new init gameboard
             var game = new Gameboard();
+            var player = new PlayerClass(game.Turn);
 
             //player places something
             player.MakeMove(game.Board, 0, 0);
@@ -57,9 +58,9 @@ namespace TicTacToeTest
         [TestMethod]
         public void PlayerMakesMoveOnOccupiedSpace()
         {
-            var player = new PlayerClass();
             //new init gameboard
             var game = new Gameboard();
+            var player = new PlayerClass(game.Turn);
 
             //player places something
             player.MakeMove(game.Board, 0, 0);

@@ -345,6 +345,38 @@ namespace TicTacToeTest
         [TestMethod]
         public void GameEndsAfterPlayerReaches3Wins()
         {
+            var game = new Gameboard();
+
+            game.PlayerXWins();
+            Assert.AreEqual(1, game.ScoreX);
+            game.PlayerXWins();
+            Assert.AreEqual(2, game.ScoreX);
+            game.PlayerXWins();
+            Assert.AreEqual(0, game.ScoreX);
+
+            game.PlayerOWins();
+            Assert.AreEqual(1, game.ScoreO);                         
+            game.PlayerOWins();
+            Assert.AreEqual(2, game.ScoreO);                         
+            game.PlayerOWins();
+            Assert.AreEqual(0, game.ScoreO);
+
+        }
+
+        [TestMethod]
+        public void GameKeepsTrackOfGameCounter()
+        {
+            var game = new Gameboard();
+
+            game.PlayerXWins();
+            Assert.AreEqual(1, game.ScoreX);
+            game.PlayerXWins();
+            Assert.AreEqual(2, game.ScoreX);
+            game.PlayerOWins();
+            Assert.AreEqual(1, game.ScoreO);
+            game.PlayerOWins();
+            Assert.AreEqual(2, game.ScoreO);
+            Assert.AreEqual(4, game.GameCounter);
 
         }
 

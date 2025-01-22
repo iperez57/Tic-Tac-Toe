@@ -1,4 +1,6 @@
-﻿namespace TicTacToe
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace TicTacToe
 {
     // USE MUD BLAZOR
     // creates grid 
@@ -24,11 +26,7 @@
         #region starts the board for the game
         public Gameboard()
         {
-            int playerXScore = ScoreX;
-            int playerOScore = ScoreO;
-            int stalemate = Draw;
-            int turn = Turn;
-            var player = new PlayerClass(turn);
+            var player = new PlayerClass(Turn);
             BoardInitializer();
         }
 
@@ -67,44 +65,40 @@
         //        }
         //    }
         //}
-        public void GameConditions()
+        public void GameEndConditions()
         {
             switch (GameCounter)
             {
                 case 3:
-
-                    if (ScoreX == 3)
-                    {
-                        Console.WriteLine("X Wins");
-                    }
-                    else if (ScoreO == 3)
-                    {
-                        Console.WriteLine("O Wins");
-                    }
-                    break;
                 case 4:
 
                     if (ScoreX == 3)
                     {
-                        Console.WriteLine("X Wins");
+                        PlayerXWinsGame();
+                        ResetGame();
+
                     }
                     else if (ScoreO == 3)
                     {
-                        Console.WriteLine("O Wins");
+                        PlayerOWinsGame();
+                        ResetGame();
                     }
                     break;
                 case 5:
                     if (ScoreX > ScoreO)
                     {
-                        Console.WriteLine("X Wins");
+                        PlayerXWinsGame();
+                        ResetGame();
                     }
                     else if (ScoreO > ScoreX)
                     {
-                        Console.WriteLine("O Wins");
+                        PlayerOWinsGame();
+                        ResetGame();
                     }
                     else
                     {
-                        Console.WriteLine("Draw");
+                        GameIsDraw();
+                        ResetGame();
                     }
 
                     break;
@@ -120,11 +114,13 @@
                     this.Board[row, col] = ' ';
                 }
             }
+            GameCounter++;
         }
         public void ResetGame()
         {
             ScoreX = 0;
             ScoreO = 0;
+            GameCounter = 0;
             Draw = 0;
             if (winner == true)
             {
@@ -142,32 +138,44 @@
         public int PlayerXWins()
         {
             ResetRound();
-            return ++ScoreX;
+            ScoreX++;
+            GameEndConditions();
+            return ScoreX;
         }
 
         public int PlayerOWins()
         {
             ResetRound();
-            return ++ScoreO;
+            ScoreO++;
+            GameEndConditions();
+            return ScoreO;
         }
 
         public int Stalemate()
         {
             ResetRound();
-            return ++Draw;
+            Draw++;
+            GameEndConditions();
+
+            return Draw;
         }
         #endregion
 
         #region checks for win conditions
-        //public bool WinConditionsForO()
-        //{
-        //    return CheckWinCondition('O');
-        //}
+        public bool PlayerOWinsGame()
+        {
+            return true;
+        }
 
-        //public bool WinConditionsForX()
-        //{
-        //    return CheckWinCondition('X');
-        //}
+        public bool PlayerXWinsGame()
+        {
+            return true;
+        }
+
+        public bool GameIsDraw()
+        {
+            return true;
+        }
 
         //attempt a while loo[ later to ass draw into win conditions
         public bool CheckWinCondition(char player)
@@ -238,11 +246,11 @@
 
         public bool CheckDrawCondition()
         {
-            for (var row = 0; row < Board.GetLength(0)-1; row++)
+            for (var row = 0; row < Board.GetLength(0); row++)
             {
-                for (int col = 0; col < Board.GetLength(1) - 1; col++)
+                for (int col = 0; col < Board.GetLength(1); col++)
                 {
-                    if (this.Board[row,col] == ' ')
+                    if (this.Board[row, col] == ' ')
                     {
                         return false;
                     }

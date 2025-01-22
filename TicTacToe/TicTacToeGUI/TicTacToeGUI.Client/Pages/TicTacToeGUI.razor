@@ -4,43 +4,34 @@
 
 <PageTitle>Tic Tac Toe</PageTitle>
 
-<MudPaper Class="mud-theme-warning d-flex justify-center align-center" Style="width: 347.74px; margin: auto; padding:      0px;">
-    <MudGrid AlignItems="center" Justify.Center="1">
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">One</MudPaper>
-        </MudItem>
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">One</MudPaper>
-        </MudItem>
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">One</MudPaper>
-        </MudItem>
-
-        <MudFlexBreak />
-
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">Two</MudPaper>
-        </MudItem>
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">Three</MudPaper>
-        </MudItem>
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">One</MudPaper>
-        </MudItem>
-
-        <MudFlexBreak />
-
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">Two</MudPaper>
-        </MudItem>
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">Three</MudPaper>
-        </MudItem>
-        <MudItem xs="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 100px; height: 100px;">One</MudPaper>
-        </MudItem>
+<MudPaper Class="mud-theme-warning d-flex" Style="width: 948.74px; margin: pa; padding: 0px;">
+    <MudGrid AlignItems="Center" Justify.Center="1">
+        @for (int i = 0; i < 9; i++)
+        {
+            <MudItem xs="4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: pa-15; height: 300px;">One</MudPaper>
+            </MudItem>
+        }
     </MudGrid>
+
 </MudPaper>
+
+@* .GridTile { *@
+@*   width: 10em; *@
+@*   height: 5ex; *@
+@*   background-color: gold; *@
+@*   border: 2px solid firebrick; *@
+@*   border-radius: 10px; *@
+@*   font-weight: bold; *@
+@*   color: black; *@
+@*   cursor: pointer; *@
+@* } *@
+
+@* .GridTile:hover { *@
+@*   background-color: bisque; *@
+@* } *@
+
+
 @code {
 
 }

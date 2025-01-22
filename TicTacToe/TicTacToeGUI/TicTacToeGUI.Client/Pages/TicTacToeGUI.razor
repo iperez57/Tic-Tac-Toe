@@ -8,30 +8,48 @@
     <MudGrid AlignItems="Center" Justify.Center="1">
         @for (int i = 0; i < 9; i++)
         {
+            var localIndex = i;  <!-- Create a local copy of i -->
             <MudItem xs="4">
-                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 150px; height: 150px;"></MudPaper>
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 150px; height: 150px;"
+                          @onmouseover="() => OnMouseOver(localIndex)" @onmouseleave="OnMouseOut">
+                    @if (hoveredIndex == localIndex)
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.Close" Class="icon-large" />
+                    }
+                    else
+                    {
+                        <span></span>
+                    }
+                </MudPaper>
             </MudItem>
         }
     </MudGrid>
 
 </MudPaper>
 
-@* .GridTile { *@
-@*  width: 10em; *@
-@*  height: 5ex; *@
-@*  background-color: gold; *@
-@*  border: 2px solid firebrick; *@
-@*  border-radius: 10px; *@
-@*  font-weight: bold; *@
-@*  color: black; *@
-@*  cursor: pointer; *@
-@*} *@
-
-@* .GridTile:hover { *@
-@*   background-color: bisque; *@
-@* } *@
-
-
 @code {
+    private int? hoveredIndex = null;
 
+    // private void OnMouseOver(int index)
+    // {
+    // Console.WriteLine($"Hovered over index {index}");
+    // hoveredIndex = index;
+    // }
+        
+    // private void OnMouseOut()
+    // {
+    //     Console.WriteLine($"Mouse left the item");
+    //     hoveredIndex = null;
+    // }
+    
+
+    private void OnMouseOver(int index)
+    {
+        hoveredIndex = index;
+    }
+
+    private void OnMouseOut()
+    {
+        hoveredIndex = null;
+    }
 }

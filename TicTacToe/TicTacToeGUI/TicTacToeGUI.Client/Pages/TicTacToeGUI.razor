@@ -3,29 +3,35 @@
 @page "/"
 
 <PageTitle>Tic Tac Toe</PageTitle>
+<MudContainer Fixed="true">
+    <!-- Orange Board inside the Blue Container -->
+    <MudPaper Class="mud-theme-tertiary d-flex" Style="width:800px margin: 5% auto; padding: 0px;">
+        <!-- Orange Paper Content (The Tic Tac Toe Board) -->
+        <MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: 5% auto; padding: 0px;">
+            <MudGrid AlignItems="Center" Justify.Center Class="w-100">
+                @for (int i = 0; i < 9; i++)
+                {
+                    var localIndex = i;
+                      <!-- Create a local copy of i -->
+                    <MudItem xs="4">
+                        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 150px; height: 150px;"
+                                  @onmouseover="() => OnMouseOver(localIndex)" @onmouseleave="OnMouseOut">
+                            @if (hoveredIndex == localIndex)
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Close" Class="icon-large" />
+                            }
+                            else
+                            {
+                                <span></span>
+                            }
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudPaper>
+    </MudPaper>
+</MudContainer>
 
-<MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: 5% auto;  padding: 0px;">
-    <MudGrid AlignItems="Center" Justify.Center="1">
-        @for (int i = 0; i < 9; i++)
-        {
-            var localIndex = i;  <!-- Create a local copy of i -->
-            <MudItem xs="4">
-                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 150px; height: 150px;"
-                          @onmouseover="() => OnMouseOver(localIndex)" @onmouseleave="OnMouseOut">
-                    @if (hoveredIndex == localIndex)
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.Close" Class="icon-large" />
-                    }
-                    else
-                    {
-                        <span></span>
-                    }
-                </MudPaper>
-            </MudItem>
-        }
-    </MudGrid>
-
-</MudPaper>
 
 @code {
     private int? hoveredIndex = null;
@@ -43,24 +49,6 @@
     // }
     
     <!-- Blue Container -->
-    <MudContainer Fixed="true">
-        <!-- Orange Board inside the Blue Container -->
-    <MudPaper Class="mud-theme-tertiary d-flex" Style="width:800px margin: 5% auto; padding: 0px;">
-            <!-- Orange Paper Content (The Tic Tac Toe Board) -->
-            <MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: 5% auto; padding: 0px;">
-                <MudGrid AlignItems="Center" Justify.Center Class="w-100">
-                    @for (int i = 0; i < 9; i++)
-                    {
-                        <MudItem xs="4">
-                            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 150px; height: 150px;">
-                                <!-- Placeholder for X or O -->
-                            </MudPaper>
-                        </MudItem>
-                    }
-                </MudGrid>
-            </MudPaper>
-        </MudPaper>
-    </MudContainer>
 
     private void OnMouseOver(int index)
     {

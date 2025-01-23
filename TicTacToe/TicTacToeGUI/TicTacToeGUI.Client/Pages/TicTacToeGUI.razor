@@ -4,51 +4,62 @@
 
 <PageTitle>Tic Tac Toe</PageTitle>
 <MudContainer Fixed="true">
-    <!-- Orange Board inside the Blue Container -->
-    <MudPaper Class="mud-theme-tertiary d-flex" Style="width:800px margin: 5% auto; padding: 0px;">
-        <!-- Orange Paper Content (The Tic Tac Toe Board) -->
-        <MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: 5% auto; padding: 0px;">
-            <MudGrid AlignItems="Center" Justify.Center Class="w-100">
-                @for (int i = 0; i < 9; i++)
-                {
-                    var localIndex = i;
-                      <!-- Create a local copy of i -->
-                    <MudItem xs="4">
-                        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8" Style="width: 150px; height: 150px;"
-                                  @onmouseover="() => OnMouseOver(localIndex)" @onmouseleave="OnMouseOut">
-                            @if (hoveredIndex == localIndex)
-                            {
-                                <MudIcon Icon="@Icons.Material.Filled.Close" Class="icon-large" />
-                            }
-                            else
-                            {
-                                <span></span>
-                            }
-                        </MudPaper>
-                    </MudItem>
-                }
-            </MudGrid>
-        </MudPaper>
+    <!-- Main Container -->
+    <MudPaper Class="mud-theme-tertiary d-flex" Style="width: 1000px; margin: 5% auto; padding: 20px;">
+        <MudGrid AlignItems="Center" Class="w-100">
+
+            <!-- Player X Section (Left) -->
+            <MudItem xs="3">
+                <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
+                    <MudText Typo="Typo.h5" Align="Align.Center">Player X</MudText>
+                </MudPaper>
+                <MudText Typo="Typo.body1" Align="Align.Center">Score: 0</MudText>
+            </MudItem>
+
+            <!-- Tic Tac Toe Board with Draw Counter (Center) -->
+            <MudItem xs="6">
+                <!-- Draw Counter -->
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Draws: 0</MudText>
+                <MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: auto; padding: 0px;">
+                    <MudGrid AlignItems="Center" Justify.Center Class="w-100">
+                        @for (int i = 0; i < 9; i++)
+                        {
+                            var localIndex = i;
+                            <!-- Create a local copy of i -->
+                            <MudItem xs="4">
+                                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8"
+                                          Style="width: 150px; height: 150px;"
+                                          @onmouseover="() => OnMouseOver(localIndex)"
+                                          @onmouseleave="OnMouseOut">
+                                    @if (hoveredIndex == localIndex)
+                                    {
+                                        <MudIcon Icon="@Icons.Material.Filled.Close" Class="icon-large" />
+                                    }
+                                    else
+                                    {
+                                        <span></span>
+                                    }
+                                </MudPaper>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+
+            <!-- Player O Section (Right) -->
+            <MudItem xs="3" Class="d-flex flex-column align-end">
+                <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
+                    <MudText Typo="Typo.h5" Align="Align.Center">Player O</MudText>
+                </MudPaper>
+                <MudText Typo="Typo.body1" Align="Align.Right">Score: 0</MudText>
+            </MudItem>
+
+        </MudGrid>
     </MudPaper>
 </MudContainer>
 
-
 @code {
     private int? hoveredIndex = null;
-
-    // private void OnMouseOver(int index)
-    // {
-    // Console.WriteLine($"Hovered over index {index}");
-    // hoveredIndex = index;
-    // }
-        
-    // private void OnMouseOut()
-    // {
-    //     Console.WriteLine($"Mouse left the item");
-    //     hoveredIndex = null;
-    // }
-    
-    <!-- Blue Container -->
 
     private void OnMouseOver(int index)
     {

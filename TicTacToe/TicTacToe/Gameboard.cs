@@ -22,7 +22,9 @@ namespace TicTacToe
         public char[,] Board = new char[3, 3];
         public bool winner = true;
         public int GameCounter = 0;
-
+        public bool GameDraw = false;
+        public bool XWin = false;
+        public bool OWin = false;
         #region starts the board for the game
         public Gameboard()
         {
@@ -41,30 +43,6 @@ namespace TicTacToe
             }
         }
         #endregion
-
-        //public void GameEndConditions()
-        //{
-        //    while ((ScoreX != 3 && ScoreO != 3) && (GameCounter != 5))
-        //    {
-        //        if (ScoreX > ScoreO)
-        //        {
-        //            Console.WriteLine("Player X wins the best of 5!");
-        //            ResetGame();
-        //            bool winner = true;
-        //        }
-        //        else if (ScoreO > ScoreX)
-        //        {
-        //            Console.WriteLine("Player O wins the best of 5!");
-        //            ResetGame();
-        //            bool winner = false;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("It's a Tie!");
-        //            bool winner = true;
-        //        }
-        //    }
-        //}
         public void GameEndConditions()
         {
             switch (GameCounter)
@@ -114,14 +92,6 @@ namespace TicTacToe
                     this.Board[row, col] = ' ';
                 }
             }
-            GameCounter++;
-        }
-        public void ResetGame()
-        {
-            ScoreX = 0;
-            ScoreO = 0;
-            GameCounter = 0;
-            Draw = 0;
             if (winner == true)
             {
                 Turn = 0;
@@ -130,24 +100,37 @@ namespace TicTacToe
             {
                 Turn = 1;
             }
+            GameCounter++;
+        }
+        public void ResetGame()
+        {
+            ScoreX = 0;
+            ScoreO = 0;
+            GameCounter = 0;
+            Draw = 0;
+            GameDraw = false;
+            XWin = false;
+            OWin = false;
 
         }
 
 
         #region keeps track of increasing score of the game
-        public int PlayerXWins()
+        public int PlayerXWinsRound()
         {
             ResetRound();
             ScoreX++;
             GameEndConditions();
+            winner = true;
             return ScoreX;
         }
 
-        public int PlayerOWins()
+        public int PlayerOWinsRound()
         {
             ResetRound();
             ScoreO++;
             GameEndConditions();
+            winner = false;
             return ScoreO;
         }
 
@@ -156,7 +139,7 @@ namespace TicTacToe
             ResetRound();
             Draw++;
             GameEndConditions();
-
+            winner = true;
             return Draw;
         }
         #endregion
@@ -164,17 +147,17 @@ namespace TicTacToe
         #region checks for win conditions
         public bool PlayerOWinsGame()
         {
-            return true;
+            return OWin = true;
         }
 
         public bool PlayerXWinsGame()
         {
-            return true;
+            return XWin = true;
         }
 
         public bool GameIsDraw()
         {
-            return true;
+            return GameDraw = true;
         }
 
         //attempt a while loo[ later to ass draw into win conditions
@@ -188,11 +171,11 @@ namespace TicTacToe
                 {
                     if (player == 'X')
                     {
-                        PlayerXWins();
+                        PlayerXWinsRound();
                     }
                     else
                     {
-                        PlayerOWins();
+                        PlayerOWinsRound();
                     }
                     return true;
                 }
@@ -202,11 +185,11 @@ namespace TicTacToe
                 {
                     if (player == 'X')
                     {
-                        PlayerXWins();
+                        PlayerXWinsRound();
                     }
                     else
                     {
-                        PlayerOWins();
+                        PlayerOWinsRound();
                     }
                     return true;
                 }
@@ -217,11 +200,11 @@ namespace TicTacToe
             {
                 if (player == 'X')
                 {
-                    PlayerXWins();
+                    PlayerXWinsRound();
                 }
                 else
                 {
-                    PlayerOWins();
+                    PlayerOWinsRound();
                 }
 
                 return true;
@@ -232,15 +215,14 @@ namespace TicTacToe
                 //currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 if (player == 'X')
                 {
-                    PlayerXWins();
+                    PlayerXWinsRound();
                 }
                 else
                 {
-                    PlayerOWins();
+                    PlayerOWinsRound();
                 }
                 return true;
             }
-
             return false;
         }
 

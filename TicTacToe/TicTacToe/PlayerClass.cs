@@ -24,14 +24,22 @@ namespace TicTacToe
             
         }
 
-        public void MakeMove(char[,] board, int row, int col)
+        public void MakeMove(Gameboard board, int row, int col)
         {
-            while (board[row, col] == ' ')
+            if (board.Board[row, col] == ' ')
             {
-                board[row, col] = currentPlayer;
+                board.Board[row, col] = currentPlayer;
+                board.CheckWinCondition(currentPlayer);
+                board.CheckDrawCondition();
+                SwapPlayer();
             }
-            SwapPlayer();
+            //work on this later
+            //else
+            //{
+            //    Console.WriteLine("Cell is already occupied!");
+            //}
         }
+
 
         public void SwapPlayer()
         {

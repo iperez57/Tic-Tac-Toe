@@ -432,13 +432,13 @@ namespace TicTacToeTest
             var game = new Gameboard();
 
             game.PlayerXWinsRound();
-            Assert.IsTrue(game.winner == true);
+            Assert.IsTrue(game.WinnerRound == true);
 
             game.PlayerOWinsRound();
-            Assert.IsTrue(game.winner == false);
+            Assert.IsTrue(game.WinnerRound == false);
 
             game.Stalemate();
-            Assert.IsTrue(game.winner == true);
+            Assert.IsTrue(game.WinnerRound == true);
         }
 
         [TestMethod]
@@ -446,12 +446,12 @@ namespace TicTacToeTest
         {
             var game = new Gameboard();
             game.PlayerXWinsRound();
-            Assert.IsTrue(game.winner == true);
+            Assert.IsTrue(game.WinnerRound == true);
             game.PlayerOWinsRound();
-            Assert.IsTrue(game.winner == false);
+            Assert.IsTrue(game.WinnerRound == false);
 
             game.Stalemate();
-            Assert.IsTrue(game.winner == true);
+            Assert.IsTrue(game.WinnerRound == true);
         }
 
 

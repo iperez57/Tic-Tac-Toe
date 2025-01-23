@@ -28,9 +28,9 @@ namespace TicTacToeTest
 
             //player places something
             Assert.AreEqual('X', player.currentPlayer);
-            player.MakeMove(game.Board, 0, 0);
+            player.MakeMove(game, 0, 0);
             Assert.AreEqual('O', player.currentPlayer);
-            player.MakeMove(game.Board, 0, 1);
+            player.MakeMove(game, 0, 1);
             Assert.AreEqual('X', player.currentPlayer);
 
             //gameboard contains said something
@@ -46,7 +46,7 @@ namespace TicTacToeTest
             var game = new Gameboard();
 
             //player places something
-            player.MakeMove(game.Board, 0, 0);
+            player.MakeMove(game, 0, 0);
 
 
             //gameboard contains said something
@@ -62,8 +62,8 @@ namespace TicTacToeTest
             var game = new Gameboard();
 
             //player places something
-            player.MakeMove(game.Board, 0, 0);
-            player.MakeMove(game.Board, 0, 0);
+            player.MakeMove(game, 0, 0);
+            player.MakeMove(game, 0, 0);
 
             //gameboard contains said something
             Assert.AreEqual('X', game.Board[0, 0]);

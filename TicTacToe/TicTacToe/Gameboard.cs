@@ -15,20 +15,21 @@ namespace TicTacToe
     // 
     public class Gameboard
     {
-        public int ScoreX = 0;
-        public int ScoreO = 0;
-        public int Draw = 0;
-        public int Turn = 0;
-        public char[,] Board = new char[3, 3];
-        public bool winner = true;
-        public int GameCounter = 0;
-        public bool GameDraw = false;
-        public bool XWin = false;
-        public bool OWin = false;
+        // Properties for scores and state
+        public int ScoreX { get; private set; } = 0;
+        public int ScoreO { get; private set; } = 0;
+        public int Draw { get; private set; } = 0;
+        public int Turn { get; set; } = 0; // Can be set externally if needed
+        public char[,] Board { get; private set; } = new char[3, 3];
+
+        public bool WinnerRound { get; private set; } = true;
+        public int GameCounter { get; private set; } = 0;
+        public bool GameDraw { get; private set; } = false;
+        public bool XWinGame { get; private set; } = false;
+        public bool OWinGame { get; private set; } = false;
         #region starts the board for the game
         public Gameboard()
         {
-            var player = new PlayerClass(Turn);
             BoardInitializer();
         }
 
@@ -85,14 +86,8 @@ namespace TicTacToe
 
         public void ResetRound()
         {
-            for (var row = 0; row < 3; row++)
-            {
-                for (int col = 0; col < 3; col++)
-                {
-                    this.Board[row, col] = ' ';
-                }
-            }
-            if (winner == true)
+            BoardInitializer();
+            if (WinnerRound == true)
             {
                 Turn = 0;
             }
@@ -109,8 +104,8 @@ namespace TicTacToe
             GameCounter = 0;
             Draw = 0;
             GameDraw = false;
-            XWin = false;
-            OWin = false;
+            XWinGame = false;
+            OWinGame = false;
 
         }
 
@@ -121,7 +116,7 @@ namespace TicTacToe
             ResetRound();
             ScoreX++;
             GameEndConditions();
-            winner = true;
+            WinnerRound = true;
             return ScoreX;
         }
 
@@ -130,7 +125,7 @@ namespace TicTacToe
             ResetRound();
             ScoreO++;
             GameEndConditions();
-            winner = false;
+            WinnerRound = false;
             return ScoreO;
         }
 
@@ -139,7 +134,7 @@ namespace TicTacToe
             ResetRound();
             Draw++;
             GameEndConditions();
-            winner = true;
+            WinnerRound = true;
             return Draw;
         }
         #endregion
@@ -147,12 +142,12 @@ namespace TicTacToe
         #region checks for win conditions
         public bool PlayerOWinsGame()
         {
-            return OWin = true;
+            return OWinGame = true;
         }
 
         public bool PlayerXWinsGame()
         {
-            return XWin = true;
+            return XWinGame = true;
         }
 
         public bool GameIsDraw()

@@ -44,29 +44,7 @@
         }
         #endregion
 
-        //public void GameEndConditions()
-        //{
-        //    while ((ScoreX != 3 && ScoreO != 3) && (GameCounter != 5))
-        //    {
-        //        if (ScoreX > ScoreO)
-        //        {
-        //            Console.WriteLine("Player X wins the best of 5!");
-        //            ResetGame();
-        //            bool winner = true;
-        //        }
-        //        else if (ScoreO > ScoreX)
-        //        {
-        //            Console.WriteLine("Player O wins the best of 5!");
-        //            ResetGame();
-        //            bool winner = false;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("It's a Tie!");
-        //            bool winner = true;
-        //        }
-        //    }
-        //}
+       
         public void GameConditions()
         {
             switch (GameCounter)

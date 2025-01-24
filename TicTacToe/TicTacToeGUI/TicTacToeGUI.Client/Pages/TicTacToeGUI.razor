@@ -12,9 +12,20 @@
 
             <!-- Player X Section (Left) -->
             <MudItem xs="3">
-                <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
-                    <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
-                </MudPaper>
+                @if (player.currentPlayer == 'O')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-tertiary d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreX</MudText>
+                    </MudPaper>
+                }
+                else if (player.currentPlayer == 'X')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-warning d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreX</MudText>
+                    </MudPaper>
+                }
             </MudItem>
 
             <!-- Tic Tac Toe Board with Draw Counter (Center) -->
@@ -35,18 +46,15 @@
                                               @onmouseover="() => OnMouseOver(localRow, localCol)"
                                               @onmouseleave="OnMouseOut"
                                               @onclick="() => OnCellClick(localRow, localCol)">
+                                        @if (hoveredIndex == (localRow, localCol))
+                                        {
+                                            <MudIcon Icon="@GetIconForCurrentPlayer()" Class="icon-large" />
+                                        }
                                         @if (game.Board[localRow, localCol] != '\0')
                                         {
                                             <MudText Typo="Typo.h4">@game.Board[localRow, localCol]</MudText>
                                         }
-                                        else if (hoveredIndex == (localRow, localCol))
-                                        {
-                                            <MudIcon Icon="@GetIconForCurrentPlayer()" Class="icon-large" />
-                                        }
-                                        else
-                                        {
-                                            <span></span>
-                                        }
+                                        
                                     </MudPaper>
                                 </MudItem>
                             }
@@ -58,17 +66,28 @@
 
             <!-- Player O Section (Right) -->
             <MudItem xs="3" Class="d-flex flex-column align-end">
-                <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
-                    <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
-                </MudPaper>
+                @if (player.currentPlayer == 'X')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-tertiary d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreO</MudText>
+                    </MudPaper>
+                }
+                else if (player.currentPlayer == 'O')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-warning d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreO</MudText>
+                    </MudPaper>
+                }
             </MudItem>
-
         </MudGrid>
     </MudPaper>
 </MudContainer>
 
-<!--to-do list: on hover fix, scoring fix, the hover changes to block for not ur turn, highlights turn(green to orange)-->
+<!--to-do list: the hover changes to block for not ur turn,-->
 @code {
+
     Gameboard game = new Gameboard();
     PlayerClass player = new PlayerClass(0);
     private (int, int)? hoveredIndex = null;
@@ -76,12 +95,16 @@
     private void OnMouseOver(int row, int col)
     {
         hoveredIndex = (row, col);
+        StateHasChanged();
     }
+
 
     private void OnMouseOut()
     {
         hoveredIndex = null;
+        StateHasChanged();
     }
+
 
     private void OnCellClick(int row, int col)
     {

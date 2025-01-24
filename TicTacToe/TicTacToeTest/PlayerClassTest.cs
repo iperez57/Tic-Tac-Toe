@@ -26,6 +26,7 @@ namespace TicTacToeTest
             var game = new Gameboard();
             var player = new PlayerClass(0);
 
+
             //player places something
             Assert.AreEqual('X', player.currentPlayer);
             player.MakeMove(game, 0, 0);
@@ -41,9 +42,9 @@ namespace TicTacToeTest
         [TestMethod]
         public void PlayerMakesMoveOnEmptySpace()
         {
-            var player = new PlayerClass(0);
             //new init gameboard
             var game = new Gameboard();
+            var player = new PlayerClass(0);
 
             //player places something
             player.MakeMove(game, 0, 0);
@@ -57,9 +58,9 @@ namespace TicTacToeTest
         [TestMethod]
         public void PlayerMakesMoveOnOccupiedSpace()
         {
-            var player = new PlayerClass(0);
             //new init gameboard
             var game = new Gameboard();
+            var player = new PlayerClass(0);
 
             //player places something
             player.MakeMove(game, 0, 0);

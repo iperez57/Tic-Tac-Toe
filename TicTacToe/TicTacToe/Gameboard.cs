@@ -44,6 +44,7 @@ namespace TicTacToe
             }
         }
         #endregion
+
         public void GameEndConditions()
         {
             switch (GameCounter)

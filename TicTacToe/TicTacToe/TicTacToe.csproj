@@ -4,6 +4,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>TicTacToe</PackageId>
+    <Title>TicTacToe</Title>
+    <Version>1.0.0</Version>
+    <Authors>Angelshar, iperez57, sd543</Authors>
+    <Description>TicTacToe  Game Class Library and Tests</Description>
+    <PackageTags>game; tictactoe;</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/iperez57/Tic-Tac-Toe</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/iperez57/Tic-Tac-Toe</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace TicTacToeTest
         }
 
         [TestMethod]
-        public void PlayerSwapsXtoO()
+        public void PlayerSwaps()
         {
             //new init gameboard
             var game = new Gameboard();

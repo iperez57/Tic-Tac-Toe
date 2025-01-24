@@ -1,25 +1,25 @@
 ﻿@using MudBlazor;
 
 @page "/"
-
+<link href="css/custom.css" rel="stylesheet" />
 <PageTitle>Tic Tac Toe</PageTitle>
+
 <MudContainer Fixed="true">
     <!-- Main Container -->
-    <MudPaper Class="mud-theme-tertiary d-flex" Style="width: 1000px; margin: 5% auto; padding: 20px;">
+    <MudPaper Class="mud-theme-tertiary d-flex" Style="width: 1100px; margin: 5% auto; padding: 20px;">
         <MudGrid AlignItems="Center" Class="w-100">
 
             <!-- Player X Section (Left) -->
             <MudItem xs="3">
                 <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
-                    <MudText Typo="Typo.h5" Align="Align.Center">Player X</MudText>
+                    <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
                 </MudPaper>
-                <MudText Typo="Typo.body1" Align="Align.Center">Score: 0</MudText>
             </MudItem>
 
             <!-- Tic Tac Toe Board with Draw Counter (Center) -->
             <MudItem xs="6">
                 <!-- Draw Counter -->
-                <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Draws: 0</MudText>
+                <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center" Class="mb-4">Draws: </MudText>
                 <MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: auto; padding: 0px;">
                     <MudGrid AlignItems="Center" Justify.Center Class="w-100">
                         @for (int i = 0; i < 9; i++)
@@ -44,14 +44,14 @@
                         }
                     </MudGrid>
                 </MudPaper>
+                <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center" Class="mb-4">Game: ?/5</MudText>
             </MudItem>
 
             <!-- Player O Section (Right) -->
             <MudItem xs="3" Class="d-flex flex-column align-end">
                 <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
-                    <MudText Typo="Typo.h5" Align="Align.Center">Player O</MudText>
+                    <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
                 </MudPaper>
-                <MudText Typo="Typo.body1" Align="Align.Right">Score: 0</MudText>
             </MudItem>
 
         </MudGrid>

@@ -55,7 +55,6 @@ namespace TicTacToeTest
             }
         }
         #endregion
-
         #region Rows
         [TestMethod]
         public void GameboardIdentifiesRowWinForO()
@@ -290,7 +289,6 @@ namespace TicTacToeTest
             Assert.AreEqual(0, game8.ScoreO);
 
         }
-
         #region tests for scores
 
         [TestMethod]
@@ -312,8 +310,8 @@ namespace TicTacToeTest
             //arrnage
             var game = new Gameboard();
             //act
-            game.PlayerOWins();
-            game.PlayerXWins();
+            game.PlayerOWinsRound();
+            game.PlayerXWinsRound();
             game.Stalemate();
 
             //Assert
@@ -323,7 +321,6 @@ namespace TicTacToeTest
             Assert.AreEqual(0, game.Turn);
         }
         #endregion
-
         [TestMethod]
         public void MakeSureBoardResetsAfterWin()
         {
@@ -331,7 +328,7 @@ namespace TicTacToeTest
             var game = new Gameboard();
             //act
             game.Board[0, 0] = 'X'; game.Board[0, 1] = 'X'; game.Board[0, 2] = 'X';
-            game.PlayerXWins();
+            game.PlayerXWinsRound();
             //assert
             for (var row = 0; row < 3; row++)
             {
@@ -345,9 +342,117 @@ namespace TicTacToeTest
         [TestMethod]
         public void GameEndsAfterPlayerReaches3Wins()
         {
+            var game = new Gameboard();
+
+            game.PlayerXWinsRound();
+            Assert.AreEqual(1, game.ScoreX);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(2, game.ScoreX);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(0, game.ScoreX);
+
+            game.PlayerOWinsRound();
+            Assert.AreEqual(1, game.ScoreO);                         
+            game.PlayerOWinsRound();
+            Assert.AreEqual(2, game.ScoreO);                         
+            game.PlayerOWinsRound();
+            Assert.AreEqual(0, game.ScoreO);
 
         }
 
+        [TestMethod]
+        public void GameEndsAfterPlayerReaches3WinsWith4Rounds()
+        {
+            var game = new Gameboard();
+
+            game.Stalemate();
+            Assert.AreEqual(1, game.Draw);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(1, game.ScoreX);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(2, game.ScoreX);
+            Assert.AreEqual(3, game.GameCounter);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(0, game.ScoreX);
+            Assert.AreEqual(0, game.GameCounter);
+
+            game.Stalemate();
+            Assert.AreEqual(1, game.Draw);
+            game.PlayerOWinsRound();
+            Assert.AreEqual(1, game.ScoreO);
+            game.PlayerOWinsRound();
+            Assert.AreEqual(2, game.ScoreO);
+            Assert.AreEqual(3, game.GameCounter);
+            game.PlayerOWinsRound();
+            Assert.AreEqual(0, game.ScoreO);
+            Assert.AreEqual(0, game.GameCounter);
+
+        }
+
+        [TestMethod]
+        public void GameKeepsTrackOfGameCounter()
+        {
+            var game = new Gameboard();
+
+            game.PlayerXWinsRound();
+            Assert.AreEqual(1, game.ScoreX);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(2, game.ScoreX);
+            game.Stalemate();
+            Assert.AreEqual(1, game.Draw);
+            game.PlayerOWinsRound();
+            Assert.AreEqual(1, game.ScoreO);
+            Assert.AreEqual(4, game.GameCounter);
+
+        }
+
+        [TestMethod]
+        public void GameCanGoUpTo5Rounds()
+        {
+            var game = new Gameboard();
+
+            game.PlayerXWinsRound();
+            Assert.AreEqual(1, game.ScoreX);
+            game.PlayerXWinsRound();
+            Assert.AreEqual(2, game.ScoreX);
+            game.Stalemate();
+            Assert.AreEqual(1, game.Draw);
+            game.PlayerOWinsRound();
+            Assert.AreEqual(1, game.ScoreO);
+            Assert.AreEqual(4, game.GameCounter);
+            game.PlayerOWinsRound();
+            Assert.AreEqual(0, game.ScoreO);
+            Assert.AreEqual(0, game.GameCounter);
+
+        }
+
+        [TestMethod]
+        public void CurrentWinnerStartsEveryRound()
+        {
+            var game = new Gameboard();
+
+            game.PlayerXWinsRound();
+            Assert.IsTrue(game.WinnerRound == true);
+
+            game.PlayerOWinsRound();
+            Assert.IsTrue(game.WinnerRound == false);
+
+            game.Stalemate();
+            Assert.IsTrue(game.WinnerRound == true);
+        }
+
+        [TestMethod]
+        public void LoserCannotStartRound()
+        {
+            var game = new Gameboard();
+            game.PlayerXWinsRound();
+            Assert.IsTrue(game.WinnerRound == true);
+            game.PlayerOWinsRound();
+            Assert.IsTrue(game.WinnerRound == false);
+
+            game.Stalemate();
+            Assert.IsTrue(game.WinnerRound == true);
+        }
 
 
 

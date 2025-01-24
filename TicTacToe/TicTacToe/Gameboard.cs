@@ -1,4 +1,6 @@
-﻿namespace TicTacToe
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace TicTacToe
 {
     // USE MUD BLAZOR
     // creates grid 
@@ -13,22 +15,21 @@
     // 
     public class Gameboard
     {
-        public int ScoreX = 0;
-        public int ScoreO = 0;
-        public int Draw = 0;
-        public int Turn = 0;
-        public char[,] Board = new char[3, 3];
-        public bool winner = true;
-        public int GameCounter = 0;
+        // Properties for scores and state
+        public int ScoreX { get; private set; } = 0;
+        public int ScoreO { get; private set; } = 0;
+        public int Draw { get; private set; } = 0;
+        public int Turn { get; set; } = 0; // Can be set externally if needed
+        public char[,] Board { get; private set; } = new char[3, 3];
 
+        public bool WinnerRound { get; private set; } = true;
+        public int GameCounter { get; private set; } = 0;
+        public bool GameDraw { get; private set; } = false;
+        public bool XWinGame { get; private set; } = false;
+        public bool OWinGame { get; private set; } = false;
         #region starts the board for the game
         public Gameboard()
         {
-            int playerXScore = ScoreX;
-            int playerOScore = ScoreO;
-            int stalemate = Draw;
-            int turn = Turn;
-            var player = new PlayerClass(turn);
             BoardInitializer();
         }
 
@@ -44,45 +45,40 @@
         }
         #endregion
 
-       
-        public void GameConditions()
+        public void GameEndConditions()
         {
             switch (GameCounter)
             {
                 case 3:
-
-                    if (ScoreX == 3)
-                    {
-                        Console.WriteLine("X Wins");
-                    }
-                    else if (ScoreO == 3)
-                    {
-                        Console.WriteLine("O Wins");
-                    }
-                    break;
                 case 4:
 
                     if (ScoreX == 3)
                     {
-                        Console.WriteLine("X Wins");
+                        PlayerXWinsGame();
+                        ResetGame();
+
                     }
                     else if (ScoreO == 3)
                     {
-                        Console.WriteLine("O Wins");
+                        PlayerOWinsGame();
+                        ResetGame();
                     }
                     break;
                 case 5:
                     if (ScoreX > ScoreO)
                     {
-                        Console.WriteLine("X Wins");
+                        PlayerXWinsGame();
+                        ResetGame();
                     }
                     else if (ScoreO > ScoreX)
                     {
-                        Console.WriteLine("O Wins");
+                        PlayerOWinsGame();
+                        ResetGame();
                     }
                     else
                     {
-                        Console.WriteLine("Draw");
+                        GameIsDraw();
+                        ResetGame();
                     }
 
                     break;
@@ -91,20 +87,8 @@
 
         public void ResetRound()
         {
-            for (var row = 0; row < 3; row++)
-            {
-                for (int col = 0; col < 3; col++)
-                {
-                    this.Board[row, col] = ' ';
-                }
-            }
-        }
-        public void ResetGame()
-        {
-            ScoreX = 0;
-            ScoreO = 0;
-            Draw = 0;
-            if (winner == true)
+            BoardInitializer();
+            if (WinnerRound == true)
             {
                 Turn = 0;
             }
@@ -112,40 +96,65 @@
             {
                 Turn = 1;
             }
+            GameCounter++;
+        }
+        public void ResetGame()
+        {
+            ScoreX = 0;
+            ScoreO = 0;
+            GameCounter = 0;
+            Draw = 0;
+            GameDraw = false;
+            XWinGame = false;
+            OWinGame = false;
 
         }
 
 
         #region keeps track of increasing score of the game
-        public int PlayerXWins()
+        public int PlayerXWinsRound()
         {
             ResetRound();
-            return ++ScoreX;
+            ScoreX++;
+            GameEndConditions();
+            WinnerRound = true;
+            return ScoreX;
         }
 
-        public int PlayerOWins()
+        public int PlayerOWinsRound()
         {
             ResetRound();
-            return ++ScoreO;
+            ScoreO++;
+            GameEndConditions();
+            WinnerRound = false;
+            return ScoreO;
         }
 
         public int Stalemate()
         {
             ResetRound();
-            return ++Draw;
+            Draw++;
+            GameEndConditions();
+            WinnerRound = true;
+            return Draw;
         }
         #endregion
 
         #region checks for win conditions
-        //public bool WinConditionsForO()
-        //{
-        //    return CheckWinCondition('O');
-        //}
+        public bool PlayerOWinsGame()
+        {
+            return OWinGame = true;
+        }
 
-        //public bool WinConditionsForX()
-        //{
-        //    return CheckWinCondition('X');
-        //}
+        public bool PlayerXWinsGame()
+        {
+            return XWinGame = true;
+        }
+
+        public bool GameIsDraw()
+        {
+            return GameDraw = true;
+        }
 
         //attempt a while loo[ later to ass draw into win conditions
         public bool CheckWinCondition(char player)
@@ -158,11 +167,11 @@
                 {
                     if (player == 'X')
                     {
-                        PlayerXWins();
+                        PlayerXWinsRound();
                     }
                     else
                     {
-                        PlayerOWins();
+                        PlayerOWinsRound();
                     }
                     return true;
                 }
@@ -172,11 +181,11 @@
                 {
                     if (player == 'X')
                     {
-                        PlayerXWins();
+                        PlayerXWinsRound();
                     }
                     else
                     {
-                        PlayerOWins();
+                        PlayerOWinsRound();
                     }
                     return true;
                 }
@@ -187,11 +196,11 @@
             {
                 if (player == 'X')
                 {
-                    PlayerXWins();
+                    PlayerXWinsRound();
                 }
                 else
                 {
-                    PlayerOWins();
+                    PlayerOWinsRound();
                 }
 
                 return true;
@@ -202,25 +211,24 @@
                 //currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 if (player == 'X')
                 {
-                    PlayerXWins();
+                    PlayerXWinsRound();
                 }
                 else
                 {
-                    PlayerOWins();
+                    PlayerOWinsRound();
                 }
                 return true;
             }
-
             return false;
         }
 
         public bool CheckDrawCondition()
         {
-            for (var row = 0; row < Board.GetLength(0)-1; row++)
+            for (var row = 0; row < Board.GetLength(0); row++)
             {
-                for (int col = 0; col < Board.GetLength(1) - 1; col++)
+                for (int col = 0; col < Board.GetLength(1); col++)
                 {
-                    if (this.Board[row,col] == ' ')
+                    if (this.Board[row, col] == ' ')
                     {
                         return false;
                     }

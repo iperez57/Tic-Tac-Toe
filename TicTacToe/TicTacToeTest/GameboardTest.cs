@@ -444,14 +444,20 @@ namespace TicTacToeTest
         [TestMethod]
         public void LoserCannotStartRound()
         {
+            //initialize new gameboard
             var game = new Gameboard();
+            var player = new PlayerClass(0);
+            //WinnerRound is X on first game
             game.PlayerXWinsRound();
+            //X wins round so X starts next round
             Assert.IsTrue(game.WinnerRound == true);
+            player.MakeMove(game, 0, 0);
+            Assert.AreEqual('X', game.Board[0, 0]);
             game.PlayerOWinsRound();
+            //O wins round so O starts next round
             Assert.IsTrue(game.WinnerRound == false);
-
-            game.Stalemate();
-            Assert.IsTrue(game.WinnerRound == true);
+            player.MakeMove(game, 1, 0);
+            Assert.AreEqual('O', game.Board[1, 0]);
         }
 
 
@@ -467,3 +473,4 @@ namespace TicTacToeTest
     }
 
 }
+

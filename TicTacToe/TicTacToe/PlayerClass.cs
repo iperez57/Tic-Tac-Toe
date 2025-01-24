@@ -33,11 +33,6 @@ namespace TicTacToe
                 board.CheckDrawCondition();
                 SwapPlayer();
             }
-            //work on this later
-            //else
-            //{
-            //    Console.WriteLine("Cell is already occupied!");
-            //}
         }
 
 

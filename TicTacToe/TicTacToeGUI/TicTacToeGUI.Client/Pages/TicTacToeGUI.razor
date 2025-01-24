@@ -42,11 +42,11 @@
                                 var localCol = col;
                                 <MudItem xs="4">
                                     <MudPaper Class="d-flex align-center justify-center mud-width-full py-8"
-                                              Style="width: 150px; height: 150px;"
-                                              @onmouseover="() => OnMouseOver(localRow, localCol)"
-                                              @onmouseleave="OnMouseOut"
-                                              @onclick="() => OnCellClick(localRow, localCol)">
-                                        @if (hoveredIndex == (localRow, localCol))
+                                    Style="width: 150px; height: 150px;"
+                                    @onmouseover="() => OnMouseOver(localRow, localCol)"
+                                    @onmouseleave="OnMouseOut"
+                                    @onclick="() => OnCellClick(localRow, localCol)">
+                                        @if (hoveredIndex == (localRow, localCol) && game.Board[localRow, localCol] == ' ')
                                         {
                                             <MudIcon Icon="@GetIconForCurrentPlayer()" Class="icon-large" />
                                         }
@@ -54,7 +54,7 @@
                                         {
                                             <MudText Typo="Typo.h4">@game.Board[localRow, localCol]</MudText>
                                         }
-                                        
+
                                     </MudPaper>
                                 </MudItem>
                             }

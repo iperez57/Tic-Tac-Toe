@@ -1,4 +1,5 @@
 ﻿@using MudBlazor;
+@using TicTacToe;
 
 @page "/"
 <link href="css/custom.css" rel="stylesheet" />
@@ -11,63 +12,122 @@
 
             <!-- Player X Section (Left) -->
             <MudItem xs="3">
-                <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
-                    <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
-                </MudPaper>
+                @if (player.currentPlayer == 'O')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-tertiary d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreX</MudText>
+                    </MudPaper>
+                }
+                else if (player.currentPlayer == 'X')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-warning d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player X</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreX</MudText>
+                    </MudPaper>
+                }
             </MudItem>
 
             <!-- Tic Tac Toe Board with Draw Counter (Center) -->
             <MudItem xs="6">
                 <!-- Draw Counter -->
-                <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center" Class="mb-4">Draws: </MudText>
+                <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center" Class="mb-4">Draws: @game.Draw</MudText>
                 <MudPaper Class="mud-theme-warning d-flex" Style="width: 498.74px; margin: auto; padding: 0px;">
                     <MudGrid AlignItems="Center" Justify.Center Class="w-100">
-                        @for (int i = 0; i < 9; i++)
+                        @for (int row = 0; row < 3; row++)
                         {
-                            var localIndex = i;
-                            <!-- Create a local copy of i -->
-                            <MudItem xs="4">
-                                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8"
-                                          Style="width: 150px; height: 150px;"
-                                          @onmouseover="() => OnMouseOver(localIndex)"
-                                          @onmouseleave="OnMouseOut">
-                                    @if (hoveredIndex == localIndex)
-                                    {
-                                        <MudIcon Icon="@Icons.Material.Filled.Close" Class="icon-large" />
-                                    }
-                                    else
-                                    {
-                                        <span></span>
-                                    }
-                                </MudPaper>
-                            </MudItem>
+                            for (int col = 0; col < 3; col++)
+                            {
+                                var localRow = row;
+                                var localCol = col;
+                                <MudItem xs="4">
+                                    <MudPaper Class="d-flex align-center justify-center mud-width-full py-8"
+                                              Style="@GetCellStyle(localRow, localCol)"
+                                              @onmouseover="() => OnMouseOver(localRow, localCol)"
+                                              @onmouseleave="OnMouseOut"
+                                              @onclick="() => OnCellClick(localRow, localCol)">
+                                        @if (hoveredIndex == (localRow, localCol) && game.Board[localRow, localCol] == ' ')
+                                        {
+                                            <MudIcon Icon="@GetIconForCurrentPlayer()" Class="icon-large" />
+                                        }
+                                        @if (game.Board[localRow, localCol] != ' ')
+                                        {
+                                            <MudText Typo="Typo.h4">@game.Board[localRow, localCol]</MudText>
+                                        }
+                                    </MudPaper>
+                                </MudItem>
+                            }
                         }
                     </MudGrid>
                 </MudPaper>
-                <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center" Class="mb-4">Game: ?/5</MudText>
+                <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center" Class="mb-4">Game: @game.GameCounter/5</MudText>
             </MudItem>
 
             <!-- Player O Section (Right) -->
             <MudItem xs="3" Class="d-flex flex-column align-end">
-                <MudPaper Class="mud-theme-warning d-flex align-center justify-center" Style="width: 150px; height: 150px;">
-                    <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
-                </MudPaper>
+                @if (player.currentPlayer == 'X')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-tertiary d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreO</MudText>
+                    </MudPaper>
+                }
+                else if (player.currentPlayer == 'O')
+                {
+                    <MudPaper Elevation="0" Class="mud-theme-warning d-flex align-center justify-center flex-column" Style="width: 150px; height: 150px;">
+                        <MudText Style="font-family: 'Jersey10'; font-size: 45px;" Typo="Typo.h5" Align="Align.Center">Player O</MudText>
+                        <MudText Style="font-family: 'Jersey10'; font-size: 30px;" Typo="Typo.h5" Align="Align.Center">Score: @game.ScoreO</MudText>
+                    </MudPaper>
+                }
             </MudItem>
-
         </MudGrid>
     </MudPaper>
 </MudContainer>
 
+<!--to-do list: the hover changes to block for not ur turn,-->
 @code {
-    private int? hoveredIndex = null;
 
-    private void OnMouseOver(int index)
+    Gameboard game = new Gameboard();
+    PlayerClass player = new PlayerClass(0);
+    private (int, int)? hoveredIndex = null;
+
+    private void OnMouseOver(int row, int col)
     {
-        hoveredIndex = index;
+        hoveredIndex = (row, col);
+        StateHasChanged();
     }
+
 
     private void OnMouseOut()
     {
         hoveredIndex = null;
+        StateHasChanged();
     }
+
+
+    private void OnCellClick(int row, int col)
+    {
+        player.MakeMove(game, row, col);
+        StateHasChanged();
+    }
+
+    private string GetIconForCurrentPlayer()
+    {
+        return player.currentPlayer == 'X' ? Icons.Material.Filled.Close : Icons.Material.Filled.PanoramaFishEye;
+    }
+
+    private string GetCellStyle(int row, int col)
+    {
+        // Check if the cell is occupied
+        if (game.Board[row, col] != ' ')
+        {
+            return "width: 150px; height: 150px; cursor: not-allowed;";
+        }
+        else
+        {
+            return "width: 150px; height: 150px;";
+        }
+    }
+
+
 }

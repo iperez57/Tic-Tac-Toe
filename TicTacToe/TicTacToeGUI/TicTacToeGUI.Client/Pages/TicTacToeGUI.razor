@@ -50,7 +50,7 @@
                                         {
                                             <MudIcon Icon="@GetIconForCurrentPlayer()" Class="icon-large" />
                                         }
-                                        @if (game.Board[localRow, localCol] != '\0')
+                                        @if (game.Board[localRow, localCol] != ' ')
                                         {
                                             <MudText Typo="Typo.h4">@game.Board[localRow, localCol]</MudText>
                                         }
